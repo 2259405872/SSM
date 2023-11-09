@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"><!--加上这句才能使用thymeleaf-->
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+</head>
+<body>
+<h1>index.html</h1>
+<a th:href="@{test/hello}">test/hello</a><br>
+<a th:href="@{hello}">hello</a><br>
+
+<a th:href="@{test/hello1}">test/hello1</a><br>
+<a th:href="@{test/hello2}">test/hello2</a><br>
+
+<a th:href="@{test/testMethod}">test/testMethod_get</a><br>
+<form method="post" th:action="@{test/testMethod}">
+    <!--不支持post请求而报错-->
+    <input type="submit" value="test/testMethod_post"/>
+</form><br>
+
+<a th:href="@{test/testParams(username='ys', password='12345')}">test/testParams</a><br>
+
+<a th:href="@{test/ant/annt1/abc}">test/ant/annt1/abc</a><br>
+<a th:href="@{test/aat/aant1/abaac}">test/aat/aant1/abaac</a><br>
+
+<a th:href="@{test/testRest/1/admin}">测试路径中的占位符-->/testRest</a><br>
+</body>
+</html>

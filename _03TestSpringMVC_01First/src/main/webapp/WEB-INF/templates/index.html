@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"><!--加上这句才能使用thymeleaf-->
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+</head>
+<body>
+<h1>index.html</h1>
+<!-- th作用将浏览器读取的/路径：http://localhost:8080/改为，服务器读取的/路径：http://localhost:8080/MVCFirst/ -->
+<a th:href="@{/hello}">测试thymeleaf</a><br>
+<a href="/hello">测试不用thymeleaf</a>
+</body>
+</html>

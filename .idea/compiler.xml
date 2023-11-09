@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="_01TestMybatis_01First" />
+        <module name="_01TestMybatis_02Parameter" />
+        <module name="_03TestSpringMVC_02Demo" />
+        <module name="_01TestMybatis_05mbg" />
+        <module name="_02TestSpring_05Aop" />
+        <module name="_03TestSpringMVC_01First" />
+        <module name="_02TestSpring_01First" />
+        <module name="_02TestSpring_03IocAnnotation" />
+        <module name="_02TestSpring_04Proxy" />
+        <module name="_02TestSpring_06Transaction" />
+        <module name="_02TestSpring_02IocXml" />
+        <module name="_01TestMybatis_03resultMap" />
+        <module name="_01TestMybatis_04Chache" />
+      </profile>
+    </annotationProcessing>
+  </component>
+</project>

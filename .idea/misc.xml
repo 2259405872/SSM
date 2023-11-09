@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="FrameworkDetectionExcludesConfiguration">
+    <file type="web" url="file://$PROJECT_DIR$/_03TestSpringMVC_01First" />
+    <file type="web" url="file://$PROJECT_DIR$/_03TestSpringMVC_02Demo" />
+  </component>
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/_01TestMybatis/pom.xml" />
+        <option value="$PROJECT_DIR$/_01TestMybatis_01First/pom.xml" />
+        <option value="$PROJECT_DIR$/_01TestMybatis_02Parameter/pom.xml" />
+        <option value="$PROJECT_DIR$/_01TestMybatis_03resultMap/pom.xml" />
+        <option value="$PROJECT_DIR$/_01TestMybatis_04Chache/pom.xml" />
+        <option value="$PROJECT_DIR$/_01TestMybatis_05mbg/pom.xml" />
+        <option value="$PROJECT_DIR$/_02TestSpring_01First/pom.xml" />
+        <option value="$PROJECT_DIR$/_03TestSpring_02IocXml/pom.xml" />
+        <option value="$PROJECT_DIR$/_02TestSpring_02IocXml/pom.xml" />
+        <option value="$PROJECT_DIR$/_02TestSpring_03IocAnnotation/pom.xml" />
+        <option value="$PROJECT_DIR$/_03TestSpring_04Proxy/pom.xml" />
+        <option value="$PROJECT_DIR$/_03TestSpring_05Aop/pom.xml" />
+        <option value="$PROJECT_DIR$/_02TestSpring_04Aop/pom.xml" />
+        <option value="$PROJECT_DIR$/_02TestSpring_04Proxy/pom.xml" />
+        <option value="$PROJECT_DIR$/_02TestSpring_05Aop/pom.xml" />
+        <option value="$PROJECT_DIR$/_02TestSpring_06Transaction/pom.xml" />
+        <option value="$PROJECT_DIR$/_03TestSpringMVC_01First/pom.xml" />
+        <option value="$PROJECT_DIR$/_03TestSpringMVC_02RequestMapping/pom.xml" />
+        <option value="$PROJECT_DIR$/_03TestSpringMVC_02Demo/pom.xml" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/out" />
+  </component>
+</project>

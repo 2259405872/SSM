@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd">
+    <bean id="student1" class="com.ys.spring.bean.Student">
+        <!-- property标签：通过组件类的setXxx()方法给组件对象设置属性 -->
+        <!-- name属性：指定属性名（这个属性名是getXxx()、setXxx()方法定义的，和成员变量无关）-->
+        <!-- value属性：指定属性值 -->
+        <property name="id" value="1"></property>
+        <property name="name" value="杨山"></property>
+        <property name="age" value="20"></property>
+        <property name="sex" value="男"></property>
+    </bean>
+
+    <bean id="student2" class="com.ys.spring.bean.Student">
+        <!--构造器注入-->
+        <constructor-arg value="2"/>
+        <constructor-arg value="罗阳"/>
+        <constructor-arg value="21"/>
+        <constructor-arg value="男"/>
+    </bean>
+
+    <!--实验五：特殊值处理-->
+    <bean id="student3" class="com.ys.spring.bean.Student">
+        <!-- 使用value属性给bean的属性赋值时，Spring会把value属性的值看做字面量 -->
+        <property name="id" value="3"/>
+        <!--null值-->
+        <property name="name">
+            <null/>
+        </property>
+        <property name="age" value="20"></property>
+        <!-- 小于号在XML文档中用来定义标签的开始，不能随便使用 -->
+        <!-- 解决方案一：使用XML实体来代替 -->
+<!--        <property name="sex" value=" &lt;男 &gt;"></property>-->
+        <!-- 解决方案二：使用CDATA节 -->
+        <!-- CDATA中的C代表Character，是文本、字符的含义，CDATA就表示纯文本数据 -->
+        <!-- XML解析器看到CDATA节就知道这里是纯文本，就不会当作XML标签或属性来解析 -->
+        <!-- 所以CDATA节中写什么符号都随意 -->
+        <property name="sex">
+            <value><![CDATA[<男>]]></value>
+        </property>
+    </bean>
+
+    <!--为类类型属性赋值-->
+    <!--方式一：引用外部已声明的bean-->
+    <bean name="student4" class="com.ys.spring.bean.Student">
+        <property name="id" value="4"></property>
+        <property name="name" value="魏玉鑫"></property>
+        <property name="age" value="20"></property>
+        <property name="sex" value="男"></property>
+        <!-- ref属性：引用IOC容器中某个bean的id，将所对应的bean为属性赋值 -->
+        <property name="clazz" ref="clazzOne"></property>
+    </bean>
+
+    <!--方式二：内部bean-->
+    <bean name="student5" class="com.ys.spring.bean.Student">
+        <property name="id" value="4"></property>
+        <property name="name" value="魏玉鑫"></property>
+        <property name="age" value="20"></property>
+        <property name="sex" value="男"></property>
+        <!-- ref属性：引用IOC容器中某个bean的id，将所对应的bean为属性赋值 -->
+        <property name="clazz">
+            <!-- 在一个bean中再声明一个bean就是内部bean -->
+            <!-- 内部bean只能用于给属性赋值，不能在外部通过IOC容器获取，因此可以省略id属性 -->
+            <bean class="com.ys.spring.bean.Clazz">
+                <property name="clazzId" value="2222"></property>
+                <property name="clazzName" value="财源滚滚班"></property>
+            </bean>
+        </property>
+    </bean>
+    <!--方式三：级联属性赋值-->
+    <bean id="student6" class="com.ys.spring.bean.Student">
+        <property name="id" value="1004"></property>
+        <property name="name" value="赵六"></property>
+        <property name="age" value="26"></property>
+        <property name="sex" value="女"></property>
+        <!-- 一定先引用某个bean为属性赋值，才可以使用级联方式更新属性 -->
+        <property name="clazz" ref="clazzOne"></property>
+        <property name="clazz.clazzId" value="3333"></property>
+        <property name="clazz.clazzName" value="恭喜发财班"></property>
+    </bean>
+
+    <bean id="clazzOne" class="com.ys.spring.bean.Clazz">
+        <property name="clazzId" value="1111"></property>
+        <property name="clazzName" value="财源滚滚班"></property>
+    </bean>
+
+    <bean id="student7" class="com.ys.spring.bean.Student">
+        <property name="id" value="1004"></property>
+        <property name="name" value="赵六"></property>
+        <property name="age" value="26"></property>
+        <property name="sex" value="女"></property>
+        <property name="clazz" ref="clazzOne"></property>
+        <!--为数组类型属性赋值-->
+        <property name="hobbies">
+            <array>
+                <value>抽烟</value>
+                <value>喝酒</value>
+                <value>烫头</value>
+            </array>
+        </property>
+    </bean>
+
+
+    <bean id="clazzTwo" class="com.ys.spring.bean.Clazz">
+        <property name="clazzId" value="4444"></property>
+        <property name="clazzName" value="Javaee0222"></property>
+        <property name="students">
+        <!--添加集合数据-->
+        <!--若为Set集合类型属性赋值，只需要将其中的list标签改为set标签即可-->
+            <list>
+                <ref bean="student1"></ref>
+                <ref bean="student2"></ref>
+                <ref bean="student3"></ref>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="student8" class="com.ys.spring.bean.Student">
+        <property name="id" value="1008"/>
+        <property name="name" value="刘欢"/>
+        <property name="sex" value="女"/>
+        <property name="age" value="20"/>
+        <property name="clazz" ref="clazzOne"/>
+        <property name="hobbies">
+            <array>
+                <value>果酒</value>
+                <value>偶像</value>
+                <value>拍照</value>
+            </array>
+        </property>
+        <!--为Map集合类型属性赋值-->
+        <property name="teacherMap">
+            <map>
+                <entry value-ref="teacher1" key="数学"/>
+                <entry key="数据结构" value-ref="teacher2"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean id="teacher1" class="com.ys.spring.bean.Teacher">
+        <property name="teacherId" value="101"/>
+        <property name="teacherName" value="王泓然"/>
+    </bean>
+
+    <bean id="teacher2" class="com.ys.spring.bean.Teacher">
+        <property name="teacherId" value="102"/>
+        <property name="teacherName" value="刘恒洋"/>
+    </bean>
+
+    <!--引用集合类型的bean-->
+    <!--list集合类型的bean-->
+    <util:list id="students">
+        <ref bean="student1"></ref>
+        <ref bean="student2"></ref>
+        <ref bean="student3"></ref>
+    </util:list>
+
+    <!--map集合类型的bean-->
+    <util:map id="teachers">
+        <entry key="数学" value-ref="teacher1"/>
+        <entry key="程序设计" value-ref="teacher2"/>
+    </util:map>
+    <!--引用集合类型的bean的使用-->
+    <bean id="student9" class="com.ys.spring.bean.Student">
+        <property name="id" value="1009"/>
+        <property name="name" value="金佳宏"/>
+        <property name="age" value="20"/>
+        <property name="sex" value="男"/>
+        <property name="hobbies">
+            <array>
+                <value>游戏</value>
+                <value>动画</value>
+                <value>小说</value>
+                <value>漫画</value>
+            </array>
+        </property>
+        <property name="teacherMap" ref="teachers"/>
+        <property name="clazz" ref="clazzOne"/>
+    </bean>
+
+<!--
+    实验九：p命名空间
+    引入p命名空间后，可以通过以下方式为bean的各个属性赋值
+-->
+    <bean id="studentSix" class="com.ys.spring.bean.Student"
+          p:id="1006" p:name="小明" p:clazz-ref="clazzOne" p:teacherMap-ref="teachers"/>
+</beans>

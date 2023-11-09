@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ys.mybatis.mapper.UserMapper">
+    <!--int insertUser(String username);-->
+    <!--int insertUser(Map<String,String> map);-->
+    <insert id="insertUser">
+        insert into `t_user` values(null,#{username},#{password},23,'男','12345@qq.com')
+    </insert>
+
+    <!--int deleteUser()-->
+    <delete id="deleteUser">
+        delete from t_user where id =7
+    </delete>
+
+    <!--int updateUser(int id,String username);-->
+    <update id="updateUser">
+        update t_user set username=#{param2} where id =#{param1}
+    </update>
+
+    <!--User getUserById(int id);-->
+    <select id="getUserById" resultType="User">
+        select * from t_user where id =#{id}
+    </select>
+
+    <!--List<User> getUserList();-->
+    <select id="getUserList" resultType="User">
+        select * from t_user
+    </select>
+
+    <!--int insertByUser(User user);-->
+    <insert id="insertByUser">
+        insert into t_user values (null,#{username},#{password},#{age},#{gender},#{email})
+    </insert>
+
+    <!--Map<String, Object> getAllUserToMap();-->
+    <select id="getAllUserToMapList" resultType="map">
+        select * from t_user
+    </select>
+
+    <!--Map<String, Object> getAllUserToMap();-->
+    <select id="getAllUserToMap" resultType="map">
+        select * from t_user
+    </select>
+
+    <!--List<User> testMohu(@Param("mohu") String mohu)-->
+    <select id="testMohu" resultType="User">
+        <!--select * from t_user where username like '%${mohu}%'-->
+        select * from t_user where username like concat('%',#{mohu},'%')
+    </select>
+
+    <!--deleteMore(@Param("ids") String ids);-->
+    <delete id="deleteMore">
+        delete from t_user where id in (${ids})
+    </delete>
+
+    <!--List<User> getAllUser(@Param("tableName") String tableName);-->
+    <select id="getAllUser" resultType="user">
+        select * from ${tableName}
+    </select>
+
+    <!--int insertUser(User user);-->
+    <insert id="insertUserAuto" useGeneratedKeys="true" keyProperty="id">
+        insert into t_user values (null,#{username},#{password},#{age},#{gender},#{email})
+    </insert>
+</mapper>

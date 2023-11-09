@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <!--
+    bean的生命周期:
+    1bean对象创建（调用无参构造器）
+    2给bean对象设置属性
+    bean对象初始化之前操作（由bean的后置处理器负责）
+    3bean对象初始化（需在配置bean时指定初始化方法）
+    bean对象初始化之后操作（由bean的后置处理器负责）
+    4bean对象就绪可以使用
+    5bean对象销毁（需在配置bean时指定销毁方法）
+    IOC容器关闭
+
+
+    bean的后置处理器:
+        bean的后置处理器会在生命周期的初始化前后添加额外的操作，需要实现BeanPostProcessor接口，
+    且配置到IOC容器中，需要注意的是，bean后置处理器不是单独针对某一个bean生效，而是针对IOC容
+    器中所有bean都会执行
+    -->
+    <bean class="com.ys.spring.bean.User" init-method="initMethod" destroy-method="destroyMethod">
+        <property name="id" value="1"/>
+        <property name="age" value="23"/>
+        <property name="username" value="杨山"/>
+        <property name="password" value="132123123"/>
+    </bean>
+</beans>

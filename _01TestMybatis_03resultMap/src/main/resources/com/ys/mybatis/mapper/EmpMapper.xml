@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ys.mybatis.mapper.EmpMapper">
+
+    <resultMap id="empResultMap" type="Emp">
+        <id column="emp_id" property="empId"></id>
+        <result column="emp_name" property="empName"></result>
+        <result column="age" property="age"></result>
+        <result column="gender" property="gender"></result>
+    </resultMap>
+    <!--Emp getEmpByEmpId(@Param("id") int id );-->
+    <select id="getEmpByEmpId" resultType="Emp">
+        select * from `t_emp` where `emp_id` = #{id}
+    </select>
+
+    <!--Emp getEmpByEmpIdMapResult(@Param("id") int id);-->
+    <select id="getEmpByEmpIdMapResult" resultMap="empResultMap">
+        select * from `t_emp` where `emp_id` = #{id}
+    </select>
+
+    <resultMap id="empResultMapWithDept" type="Emp">
+        <id column="emp_id" property="empId"></id>
+        <result column="emp_name" property="empName"></result>
+        <result column="age" property="age"></result>
+        <result column="gender" property="gender"></result>
+
+        <!--级联的方式
+        <result column="dept_id" property="dept.deptId"></result>
+        <result column="dept_name" property="dept.deptName"></result>
+        -->
+        <!--association的方式
+        <association property="dept" javaType="Dept">
+            <id column="dept_id" property="deptId"></id>
+            <result column="dept_name" property="deptName"></result>
+        </association>
+        -->
+        <!--分步的方式-->
+        <association column="dept_id" select="com.ys.mybatis.mapper.DeptMapper.getDeptByStep" property="dept">
+        </association>
+    </resultMap>
+    <!--Emp getEmpAndDeptById(@Param("id") int id);-->
+    <select id="getEmpAndDeptById" resultMap="empResultMapWithDept">
+        <!-- 级联和association的方式 -->
+        <!--select * from t_emp left join t_dept on t_dept.dept_id = t_emp.dept_id where emp_id=#{id}-->
+        select * from t_emp where emp_id=#{id}
+    </select>
+
+    <!--List<Emp> getEmpByDeptId(@Param("id") int deptId);-->
+    <select id="getEmpByDeptId" resultType="emp">
+        select * from t_emp where dept_id=#{id}
+    </select>
+
+    <!--if标签可通过test属性的表达式进行判断，若表达式的结果为true，则标签中的内容会执行；反之
+    标签中的内容不会执行-->
+    <!--List<Emp> getEmpListByMoreTJ(Emp emp);-->
+    <select id="getEmpListByMoreTJ" resultType="Emp">
+        select * from t_emp where 1=1<!--1=1能避免报错-->
+        <if test="empName != '' and empName != null">
+            and emp_name = #{empName}
+        </if>
+        <if test="age != '' and age != null">
+            and age = #{age}
+        </if>
+        <if test="sex != '' and sex != null">
+            and gender = #{gender}
+        </if>
+    </select>
+
+    <!--where和if一般结合使用：
+    a>若where标签中的if条件都不满足，则where标签没有任何功能，即不会添加where关键字
+    b>若where标签中的if条件满足，则where标签会自动添加where关键字，并将条件最前方多余的
+    and去掉
+    注意：where标签不能去掉条件最后多余的and-->
+    <!--List<Emp> getEmpListByMoreTJ2(Emp emp);-->
+    <select id="getEmpListByMoreTJ2" resultType="emp">
+        select * from t_emp
+        <where>
+            <if test="empName != '' and empName != null">
+                emp_name = #{empName}
+            </if>
+            <if test="age != '' and age != null">
+                age=#{age}
+            </if>
+            <if test="sex != '' and sex != null">
+                gender = #{gender}
+            </if>
+        </where>
+    </select>
+
+    <!--trim用于去掉或添加标签中的内容
+    常用属性：
+    prefix：在trim标签中的内容的前面添加某些内容
+    prefixOverrides：在trim标签中的内容的前面去掉某些内容
+    suffix：在trim标签中的内容的后面添加某些内容
+    suffixOverrides：在trim标签中的内容的后面去掉某些内容-->
+    <select id="getEmpListByMoreTJ3" resultType="emp">
+        select * from t_emp
+        <trim prefix="where" suffixOverrides="and">
+            <if test="empName != '' and empName != null">
+                emp_name = #{empName} and
+            </if>
+            <if test="age != '' and age != null">
+                age=#{age} and
+            </if>
+            <if test="sex != '' and sex != null">
+                gender = #{gender}
+            </if>
+        </trim>
+    </select>
+
+    <!--choose、when、 otherwise相当于if...else if..else-->
+    <!--List<Emp> getEmpListByChoose(Emp emp);-->
+    <select id="getEmpListByChoose" resultType="Emp">
+        select <include refid="empColumns"></include> from t_emp
+        <where>
+            <choose>
+                <when test="empName != '' and empName != null">
+                    ename = #{ename}
+                </when>
+                <when test="age != '' and age != null">
+                    age = #{age}
+                </when>
+                <when test="gender != '' and gender != null">
+                    gender = #{gender}
+                </when>
+            </choose>
+        </where>
+    </select>
+
+    <!--int insertMoreEmp(List<Emp> emps);-->
+    <insert id="insertMoreEmp">
+        insert into t_emp values
+        <foreach collection="emps" item="emp" separator=",">
+            (null,#{emp.empName},#{emp.age},#{emp.gender},null)
+        </foreach>
+    </insert>
+    <!--int deleteMoreByArray(int[] empIds);-->
+    <!--<delete id="deleteMoreByArray">
+        delete from t_emp where
+        <foreach collection="empIds" item="eid" separator="or">
+            emp_id = #{eid}
+        </foreach>
+    </delete>-->
+    <!--int deleteMoreByArray(int[] empIds);-->
+    <delete id="deleteMoreByArray">
+        delete from t_emp where t_emp.emp_id in
+        <foreach collection="empIds" item="eid" separator="," open="(" close=")">
+            #{eid}
+        </foreach>
+    </delete>
+
+    <!--sql片段，可以记录一段公共sql片段，在使用的地方通过include标签进行引入-->
+    <sql id="empColumns">
+        `emp_id`,ename,age,gender,dept_id
+    </sql>
+    <select id="" resultType="emp">
+        select <include refid="empColumns"></include> from t_emp
+    </select>
+</mapper>
